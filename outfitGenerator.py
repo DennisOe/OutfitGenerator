@@ -98,17 +98,17 @@ def export(batch: int, outfit_table: dict, outfit_objects: list) -> None:
         for e_outfit in outfit_table.values():
             # randomize outfit variants
             e_outfit[randint(0, len(e_outfit)-1)].hide_set(False)
-            while os.path.exists(export_path + f"Outfit_Rnd_{e_export:>003}.glb"):
+            while os.path.exists(export_path + f"Outfit_Rndm_{e_export:>003}"):
                 e_export += 1
-            filepath: str = export_path + f"Outfit_Rndm_{e_export:>003}.glb"
+            filepath: str = export_path + f"Outfit_Rndm_{e_export:>003}"
         # Armature name same as filename
         bpy.data.objects["Armature"].name = f"Armature_Outfit_Rndm_{e_export:>003}"
         # export
         if "gltf" in export_type:
-            bpy.ops.export_scene.gltf(filepath=filepath,
+            bpy.ops.export_scene.gltf(filepath=filepath + ".glb",
                                     use_visible=True)
         elif "fbx" in export_type:
-            bpy.ops.export_scene.fbx(filepath=filepath,
+            bpy.ops.export_scene.fbx(filepath=filepath + ".fbx",
                                     use_visible=True,
                                     add_leaf_bones=False)
         bpy.data.objects[f"Armature_Outfit_Rndm_{e_export:>003}"].name = "Armature"
